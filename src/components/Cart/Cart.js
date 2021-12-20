@@ -1,13 +1,18 @@
-import React from 'react';
-import styles from './Cart.module.css';
+import React from 'react'
+import styles from './Cart.module.css'
 
-import CartItem from './CartItem/CartItem';
+import CartItem from './CartItem/CartItem'
 
-const Cart = () => {
+import { connect } from 'react-redux'
+
+const Cart = ({ cart }) => {
   return (
     <div className={styles.cart}>
       <div className={styles.cart__items}>
         {/* <CartItem key={item.id} item={item} /> */}
+        {cart.map((item) => (
+          <CartItem itemData={item} key={item.id} />
+        ))}
       </div>
       <div className={styles.cart__summary}>
         <h4 className={styles.summary__title}>Cart Summary</h4>
@@ -20,7 +25,13 @@ const Cart = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.shop.cart,
+  }
+}
+
+export default connect(mapStateToProps)(Cart)
