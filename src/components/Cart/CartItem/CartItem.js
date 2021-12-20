@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './CartItem.module.css'
 
-const CartItem = ({ itemData }) => {
+import { connect } from 'react-redux'
+import {
+  removeFromCart,
+  adjustQty,
+} from '../../../redux/Shopping/shopping-actions'
+
+const CartItem = ({ itemData, removeFromCart, adjustQty }) => {
+  const [input, setInput] = useState(itemData.qty)
+
+  function onChangeHandler(e) {
+    setInput(e.target.value)
+    adjustQty(itemData.id, e.target.value)
+  }
+
   return (
     <div className={styles.cartItem}>
       <img
@@ -22,18 +35,26 @@ const CartItem = ({ itemData }) => {
             type="number"
             id="qty"
             name="qty"
-            value={itemData.qty}
+            value={input}
+            onChange={onChangeHandler}
           />
         </div>
-        <button className={styles.actions__deleteItemBtn}>
-          <img
-            src="https://image.flaticon.com/icons/svg/709/709519.svg"
-            alt=""
-          />
+        <button
+          onClick={() => removeFromCart(itemData.id)}
+          className={styles.actions__deleteItemBtn}
+        >
+          trash
         </button>
       </div>
     </div>
   )
 }
 
-export default CartItem
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeFromCart: (id) => dispatch(removeFromCart(id)),
+    adjustQty: (id, value) => dispatch(adjustQty(id, value)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CartItem)

@@ -31,6 +31,6 @@ export const adjustQty = (itemID, value) => {
 export const loadCurrentItem = (item) => {
   return {
     type: actionTypes.LOAD_CURRENT_ITEM,
-    payload: item,
+    payload: { item },
   }
 }

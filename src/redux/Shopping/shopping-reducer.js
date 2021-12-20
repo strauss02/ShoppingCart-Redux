@@ -11,16 +11,23 @@ const INITIAL_STATE = {
         'https://www.babycenter.com/ims/2014/11/US_baby-wearing-sunglasses_square.jpg.pagespeed.ce.QSv_XfXjGH.jpg',
     },
     {
-      id: 1,
-      title: 'Cube',
-      description: 'cool cube',
-      price: 15,
+      id: 2,
+      title: 'baby',
+      description: 'cool baby',
+      price: 30,
       image:
-        'https://www.babycenter.com/ims/2014/11/US_baby-wearing-sunglasses_square.jpg.pagespeed.ce.QSv_XfXjGH.jpg',
+        'https://is5-ssl.mzstatic.com/image/thumb/Purple111/v4/22/30/23/22302395-ce9d-a56a-a050-2304c1e9b0db/source/256x256bb.jpg',
     },
   ], // id, title, description, price, img
   cart: [], // id, title, description, price, img, qty
-  currentItem: null,
+  currentItem: {
+    id: 2,
+    title: 'baby',
+    description: 'cool baby',
+    price: 30,
+    image:
+      'https://is5-ssl.mzstatic.com/image/thumb/Purple111/v4/22/30/23/22302395-ce9d-a56a-a050-2304c1e9b0db/source/256x256bb.jpg',
+  },
 }
 
 const shopReducer = (state = INITIAL_STATE, action) => {
@@ -52,7 +59,7 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cart: state.cart.map((item) =>
           item.id === action.payload.id
-            ? { ...item, qty: action.payload.qty }
+            ? { ...item, qty: +action.payload.qty }
             : item
         ),
       }
